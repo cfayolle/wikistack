@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+  <h3>Pages with #{{tag}}</h3>
+  <hr>
+  <ul class="list-unstyled">
+    {% for page in pages %}
+    <!-- PLACEHOLDER LIST OF PAGES -->
+      <!-- Can we use the getterMethod route for the href? -->
+      <li><a href="/wiki/{{page.page_urlTitle}}">{{page.page_title}}</a></li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

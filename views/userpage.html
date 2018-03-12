@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h3>{{user.user_name}} <small> (<a href="PLACEHOLDER_URL_TITLE/similar">{{user.user_name}}</a>)</small></h3>
+  <h4>Email: {{user.user_email}} </h4>
+  <div>Pages</div>
+  <hr/>
+  <ul class="list-unstyled">
+    {% for page in pages %}
+    <!-- PLACEHOLDER LIST OF PAGES -->
+      <!-- Can we use the getterMethod route for the href? -->
+      <li><a href="/wiki/{{page.page_urlTitle}}">{{page.page_title}}</a></li>
+    {% endfor %}
+ </ul>
+  <hr/>
+  <a href="PLACEHOLDER_URL_TITLE/edit" class="btn btn-primary">edit this page</a>
+  <a href="PLACEHOLDER_URL_TITLE/delete" class="btn btn-danger">delete this page</a>
+{% endblock %}

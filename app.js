@@ -1,33 +1,32 @@
 'use strict';
 const express = require('express');
-const db = require('./db');
-const app = express();
-const morgan = require('morgan'); // helps with async rquest
-const nunjucks = require('nunjucks'); // helps with html template parsing
-// const makesRouter = require('./routes');
-const fs = require('fs'); // helps read the file system
-const path = require('path'); //
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const socketio = require('socket.io');
+const nunjucks = require('nunjucks');
+const fs = require('fs');
+const path = require('path');
 
+const models = require('./models');
+const router = require('./routes');
+const app = express();
 
-// templating boilerplate setup
-app.engine('html', nunjucks.render); // how to render html templates
-app.set('view engine', 'html'); // what file extension do our templates have
-nunjucks.configure('views', { noCache: true }); // where to find the views, caching off
-
-// logging middleware
 app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-// body parsing middleware
-app.use(bodyParser.urlencoded({ extended: true })); // for HTML form submits
-app.use(bodyParser.json()); // would be for AJAX requests
+const env = nunjucks.configure('views', {noCache: true});
+app.set('view engine', 'html');
+app.engine('html', nunjucks.render);
 
-
-// start the server
-const server = app.listen(3000, function(){
-  console.log('listening on port 3000');
-});
-
+app.use('/', router);
 app.use(express.static(path.join(__dirname, '/public')));
 
+// make sure you are exporting your db from your models file
+models.db.sync()
+.then(function () {
+    console.log('All tables created!');
+    app.listen(3000, function () {
+        console.log('Server is listening on port 3000!');
+    });
+})
+.catch(console.error.bind(console));

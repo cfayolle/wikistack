@@ -1,13 +1,23 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  <h3>PLACEHOLDER PAGE TITLE <small> (<a href="PLACEHOLDER_URL_TITLE/similar">Similar</a>)</small></h3>
-  <h4>by <a href="PLACEHOLDER-AUTHOR-URL">PLACEHOLDER AUTHOR NAME</a></h4>
-  <div>PLACEHOLDER TAG LIST</div>
+  <h3>{{foundPage.page_title}} <small> (<a href="{{foundPage.page_urlTitle}}/similar">Similar</a>)</small></h3>
+  <h4>by <a href="/users/{{foundPage.authorId}}">{{foundPage.author.user_name}}</a></h4>
+  <div>
+    <ul class="list-unstyled">
+        {% for tag in tags %}
+        <!-- PLACEHOLDER LIST OF PAGES -->
+          <!-- Can we use the getterMethod route for the href? -->
+          <li><a href="/wiki/search?tag_search={{tag}}">#{{tag}}</a></li>
+        {% endfor %}
+    </ul>
+  </div>
   <hr/>
-  <div>PLACEHOLDER AUTHOR NAME WITH LINK TO AUTHOR PAGE</div>
-  <div class="page-body">PLACEHOLDER PAGE CONTENT</div>
+  <div class="page-body">{{foundPage.page_content}}</div>
   <hr/>
   <a href="PLACEHOLDER_URL_TITLE/edit" class="btn btn-primary">edit this page</a>
   <a href="PLACEHOLDER_URL_TITLE/delete" class="btn btn-danger">delete this page</a>
 {% endblock %}
+
+
+<!-- http://localhost:3000/wiki/search?tag_search=old -->
